@@ -166,6 +166,36 @@ export type Database = {
         }
         Relationships: []
       }
+      badge_events: {
+        Row: {
+          action: string
+          badge_slug: string
+          created_at: string
+          details: Json
+          id: string
+          source: string
+          user_id: string
+        }
+        Insert: {
+          action?: string
+          badge_slug: string
+          created_at?: string
+          details?: Json
+          id?: string
+          source?: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          badge_slug?: string
+          created_at?: string
+          details?: Json
+          id?: string
+          source?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       badges: {
         Row: {
           color: string
@@ -300,6 +330,9 @@ export type Database = {
           display_name: string | null
           favicon_url: string | null
           forwarding_email: string | null
+          forwarding_email_token: string | null
+          forwarding_email_token_expires_at: string | null
+          forwarding_email_verified: boolean
           handle_grant: string | null
           id: string
           is_banned: boolean
@@ -321,6 +354,7 @@ export type Database = {
           username: string | null
           verified: boolean
           verified_at: string | null
+          verified_legal_name: string | null
         }
         Insert: {
           alias_status?: string
@@ -339,6 +373,9 @@ export type Database = {
           display_name?: string | null
           favicon_url?: string | null
           forwarding_email?: string | null
+          forwarding_email_token?: string | null
+          forwarding_email_token_expires_at?: string | null
+          forwarding_email_verified?: boolean
           handle_grant?: string | null
           id: string
           is_banned?: boolean
@@ -360,6 +397,7 @@ export type Database = {
           username?: string | null
           verified?: boolean
           verified_at?: string | null
+          verified_legal_name?: string | null
         }
         Update: {
           alias_status?: string
@@ -378,6 +416,9 @@ export type Database = {
           display_name?: string | null
           favicon_url?: string | null
           forwarding_email?: string | null
+          forwarding_email_token?: string | null
+          forwarding_email_token_expires_at?: string | null
+          forwarding_email_verified?: boolean
           handle_grant?: string | null
           id?: string
           is_banned?: boolean
@@ -399,6 +440,7 @@ export type Database = {
           username?: string | null
           verified?: boolean
           verified_at?: string | null
+          verified_legal_name?: string | null
         }
         Relationships: []
       }
@@ -785,6 +827,9 @@ export type Database = {
           display_name: string | null
           favicon_url: string | null
           forwarding_email: string | null
+          forwarding_email_token: string | null
+          forwarding_email_token_expires_at: string | null
+          forwarding_email_verified: boolean
           handle_grant: string | null
           id: string
           is_banned: boolean
@@ -806,6 +851,7 @@ export type Database = {
           username: string | null
           verified: boolean
           verified_at: string | null
+          verified_legal_name: string | null
         }
         SetofOptions: {
           from: "*"
@@ -814,6 +860,7 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      grant_signup_badges: { Args: { _user_id: string }; Returns: undefined }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -821,7 +868,36 @@ export type Database = {
         }
         Returns: boolean
       }
+      log_qr_scan: {
+        Args: {
+          _country?: string
+          _device?: string
+          _tracked_qr_id: string
+          _user_agent?: string
+        }
+        Returns: undefined
+      }
+      manage_short_link: {
+        Args: {
+          _action: string
+          _expires_at?: string
+          _is_active?: boolean
+          _slug?: string
+          _target_url?: string
+          _token: string
+        }
+        Returns: Json
+      }
+      resolve_short_link: {
+        Args: { _slug: string }
+        Returns: {
+          id: string
+          status: string
+          target_url: string
+        }[]
+      }
       seed_demo_content: { Args: { _user_id: string }; Returns: undefined }
+      short_link_stats: { Args: { _token: string }; Returns: Json }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
