@@ -1,24 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
+import Page from "@/pages/Index";
+import { socialImageMeta } from "@/lib/site";
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+export const Route = createFileRoute("/")({
+  component: Page,
+  head: () => ({
+    meta: [
+      { title: "ROUT — QR codes en korte links" },
+      { name: "description", content: "Maak stijlvolle QR-codes en korte links met ROUT, het Europese platform voor jouw digitale identiteit." },
+      { property: "og:title", content: "ROUT — QR codes en korte links" },
+      { property: "og:description", content: "Maak stijlvolle QR-codes en korte links met ROUT, het Europese platform voor jouw digitale identiteit." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      ...socialImageMeta,
+    ],
+  }),
+});
