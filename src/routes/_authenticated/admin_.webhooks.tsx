@@ -3,9 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/pages/AdminWebhooks";
 import { noindexMeta } from "@/lib/site";
 
-export const Route = createFileRoute("/_authenticated/admin/webhooks")({
+export const Route = createFileRoute("/_authenticated/admin_/webhooks")({
   component: Page,
   head: () => ({
-    meta: [{ title: "Webhooks | ROUT" }, ...noindexMeta],
+    meta: [{ title: "Webhooks | ROUT" }, noindexMeta],
   }),
 });

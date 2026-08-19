@@ -6,6 +6,6 @@ import { noindexMeta } from "@/lib/site";
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Page,
   head: () => ({
-    meta: [{ title: "Dashboard | ROUT" }, ...noindexMeta],
+    meta: [{ title: "Dashboard | ROUT" }, noindexMeta],
   }),
 });

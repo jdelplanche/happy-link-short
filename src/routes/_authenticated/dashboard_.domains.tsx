@@ -3,9 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/pages/Domains";
 import { noindexMeta } from "@/lib/site";
 
-export const Route = createFileRoute("/_authenticated/dashboard/domains")({
+export const Route = createFileRoute("/_authenticated/dashboard_/domains")({
   component: Page,
   head: () => ({
-    meta: [{ title: "Domeinen | ROUT" }, ...noindexMeta],
+    meta: [{ title: "Domeinen | ROUT" }, noindexMeta],
   }),
 });

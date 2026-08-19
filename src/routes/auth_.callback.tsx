@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/pages/routes/auth_.callback";
 import { socialImageMeta } from "@/lib/site";
 
-export const Route = createFileRoute("/auth/callback")({
+export const Route = createFileRoute("/auth_/callback")({
   component: Page,
   head: () => ({
     meta: [
