@@ -70,7 +70,7 @@ export default function ShortLink() {
       void supabase.rpc("log_qr_scan", {
         _tracked_qr_id: row.id,
         _device: device(),
-        _country: null,
+        _country: undefined,
         _user_agent: navigator.userAgent.slice(0, 500),
       });
 

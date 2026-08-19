@@ -215,10 +215,10 @@ export default function Stats() {
       const { error } = await supabase.rpc("manage_short_link", {
         _token: token,
         _action: body.action as string,
-        _target_url: (body.target_url as string | undefined) ?? null,
-        _is_active: (body.is_active as boolean | undefined) ?? null,
-        _expires_at: (body.expires_at as string | null | undefined) ?? null,
-        _slug: (body.slug as string | undefined) ?? null,
+        _target_url: (body.target_url as string | undefined) ?? undefined,
+        _is_active: (body.is_active as boolean | undefined) ?? undefined,
+        _expires_at: (body.expires_at as string | null | undefined) ?? undefined,
+        _slug: (body.slug as string | undefined) ?? undefined,
       });
       if (error) throw new Error(error.message);
       toast.success(successMsg);

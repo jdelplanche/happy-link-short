@@ -30,7 +30,7 @@ function AuthenticatedLayout() {
     const target = `${location.pathname}${location.searchStr ?? ""}`;
     navigate({
       to: "/auth",
-      search: { redirect: target },
+      search: { redirect: target } as never,
       replace: true,
     });
   }, [state, location.pathname, location.searchStr, navigate]);
