@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UsernameRouteImport } from './routes/$username'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as ApiRouteImport } from './routes/api'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BatchRouteImport } from './routes/batch'
@@ -54,6 +55,10 @@ const IndexRoute = IndexRouteImport.update({
 const UsernameRoute = UsernameRouteImport.update({
   id: '/$username',
   path: '/$username',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiRoute = ApiRouteImport.update({
@@ -147,24 +152,24 @@ const TermsRoute = TermsRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/_authenticated/admin',
+  id: '/admin',
   path: '/admin',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/_authenticated/dashboard',
+  id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedDomainsRoute = AuthenticatedDomainsRouteImport.update({
-  id: '/_authenticated/domains',
+  id: '/domains',
   path: '/domains',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/_authenticated/settings',
+  id: '/settings',
   path: '/settings',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthCallbackRoute = AuthCallbackRouteImport.update({
   id: '/auth_/callback',
@@ -193,45 +198,45 @@ const UUsernameRoute = UUsernameRouteImport.update({
 } as any)
 const AuthenticatedAdminWebhooksRoute =
   AuthenticatedAdminWebhooksRouteImport.update({
-    id: '/_authenticated/admin_/webhooks',
+    id: '/admin_/webhooks',
     path: '/admin/webhooks',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardAccountRoute =
   AuthenticatedDashboardAccountRouteImport.update({
-    id: '/_authenticated/dashboard_/account',
+    id: '/dashboard_/account',
     path: '/dashboard/account',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardApiRoute =
   AuthenticatedDashboardApiRouteImport.update({
-    id: '/_authenticated/dashboard_/api',
+    id: '/dashboard_/api',
     path: '/dashboard/api',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardBlueskyRoute =
   AuthenticatedDashboardBlueskyRouteImport.update({
-    id: '/_authenticated/dashboard_/bluesky',
+    id: '/dashboard_/bluesky',
     path: '/dashboard/bluesky',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardDomainsRoute =
   AuthenticatedDashboardDomainsRouteImport.update({
-    id: '/_authenticated/dashboard_/domains',
+    id: '/dashboard_/domains',
     path: '/dashboard/domains',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardProfileRoute =
   AuthenticatedDashboardProfileRouteImport.update({
-    id: '/_authenticated/dashboard_/profile',
+    id: '/dashboard_/profile',
     path: '/dashboard/profile',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardRoutesRoute =
   AuthenticatedDashboardRoutesRouteImport.update({
-    id: '/_authenticated/dashboard_/routes',
+    id: '/dashboard_/routes',
     path: '/dashboard/routes',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -314,6 +319,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$username': typeof UsernameRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/api': typeof ApiRoute
   '/auth': typeof AuthRoute
   '/batch': typeof BatchRoute
@@ -430,6 +436,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$username'
+    | '/_authenticated'
     | '/api'
     | '/auth'
     | '/batch'
@@ -469,6 +476,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   UsernameRoute: typeof UsernameRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   ApiRoute: typeof ApiRoute
   AuthRoute: typeof AuthRoute
   BatchRoute: typeof BatchRoute
@@ -487,22 +495,11 @@ export interface RootRouteChildren {
   SovereigntyRoute: typeof SovereigntyRoute
   StudioRoute: typeof StudioRoute
   TermsRoute: typeof TermsRoute
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedDomainsRoute: typeof AuthenticatedDomainsRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   RUsernameRoute: typeof RUsernameRoute
   SSlugRoute: typeof SSlugRoute
   StatsTokenRoute: typeof StatsTokenRoute
   UUsernameRoute: typeof UUsernameRoute
-  AuthenticatedAdminWebhooksRoute: typeof AuthenticatedAdminWebhooksRoute
-  AuthenticatedDashboardAccountRoute: typeof AuthenticatedDashboardAccountRoute
-  AuthenticatedDashboardApiRoute: typeof AuthenticatedDashboardApiRoute
-  AuthenticatedDashboardBlueskyRoute: typeof AuthenticatedDashboardBlueskyRoute
-  AuthenticatedDashboardDomainsRoute: typeof AuthenticatedDashboardDomainsRoute
-  AuthenticatedDashboardProfileRoute: typeof AuthenticatedDashboardProfileRoute
-  AuthenticatedDashboardRoutesRoute: typeof AuthenticatedDashboardRoutesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -519,6 +516,13 @@ declare module '@tanstack/react-router' {
       path: '/$username'
       fullPath: '/$username'
       preLoaderRoute: typeof UsernameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api': {
@@ -652,28 +656,28 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/domains': {
       id: '/_authenticated/domains'
       path: '/domains'
       fullPath: '/domains'
       preLoaderRoute: typeof AuthenticatedDomainsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/auth_/callback': {
       id: '/auth_/callback'
@@ -715,56 +719,89 @@ declare module '@tanstack/react-router' {
       path: '/admin/webhooks'
       fullPath: '/admin/webhooks'
       preLoaderRoute: typeof AuthenticatedAdminWebhooksRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard_/account': {
       id: '/_authenticated/dashboard_/account'
       path: '/dashboard/account'
       fullPath: '/dashboard/account'
       preLoaderRoute: typeof AuthenticatedDashboardAccountRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard_/api': {
       id: '/_authenticated/dashboard_/api'
       path: '/dashboard/api'
       fullPath: '/dashboard/api'
       preLoaderRoute: typeof AuthenticatedDashboardApiRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard_/bluesky': {
       id: '/_authenticated/dashboard_/bluesky'
       path: '/dashboard/bluesky'
       fullPath: '/dashboard/bluesky'
       preLoaderRoute: typeof AuthenticatedDashboardBlueskyRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard_/domains': {
       id: '/_authenticated/dashboard_/domains'
       path: '/dashboard/domains'
       fullPath: '/dashboard/domains'
       preLoaderRoute: typeof AuthenticatedDashboardDomainsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard_/profile': {
       id: '/_authenticated/dashboard_/profile'
       path: '/dashboard/profile'
       fullPath: '/dashboard/profile'
       preLoaderRoute: typeof AuthenticatedDashboardProfileRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard_/routes': {
       id: '/_authenticated/dashboard_/routes'
       path: '/dashboard/routes'
       fullPath: '/dashboard/routes'
       preLoaderRoute: typeof AuthenticatedDashboardRoutesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDomainsRoute: typeof AuthenticatedDomainsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedAdminWebhooksRoute: typeof AuthenticatedAdminWebhooksRoute
+  AuthenticatedDashboardAccountRoute: typeof AuthenticatedDashboardAccountRoute
+  AuthenticatedDashboardApiRoute: typeof AuthenticatedDashboardApiRoute
+  AuthenticatedDashboardBlueskyRoute: typeof AuthenticatedDashboardBlueskyRoute
+  AuthenticatedDashboardDomainsRoute: typeof AuthenticatedDashboardDomainsRoute
+  AuthenticatedDashboardProfileRoute: typeof AuthenticatedDashboardProfileRoute
+  AuthenticatedDashboardRoutesRoute: typeof AuthenticatedDashboardRoutesRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDomainsRoute: AuthenticatedDomainsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
+  AuthenticatedDashboardAccountRoute: AuthenticatedDashboardAccountRoute,
+  AuthenticatedDashboardApiRoute: AuthenticatedDashboardApiRoute,
+  AuthenticatedDashboardBlueskyRoute: AuthenticatedDashboardBlueskyRoute,
+  AuthenticatedDashboardDomainsRoute: AuthenticatedDashboardDomainsRoute,
+  AuthenticatedDashboardProfileRoute: AuthenticatedDashboardProfileRoute,
+  AuthenticatedDashboardRoutesRoute: AuthenticatedDashboardRoutesRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   UsernameRoute: UsernameRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   ApiRoute: ApiRoute,
   AuthRoute: AuthRoute,
   BatchRoute: BatchRoute,
@@ -783,22 +820,11 @@ const rootRouteChildren: RootRouteChildren = {
   SovereigntyRoute: SovereigntyRoute,
   StudioRoute: StudioRoute,
   TermsRoute: TermsRoute,
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedDomainsRoute: AuthenticatedDomainsRoute,
-  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   RUsernameRoute: RUsernameRoute,
   SSlugRoute: SSlugRoute,
   StatsTokenRoute: StatsTokenRoute,
   UUsernameRoute: UUsernameRoute,
-  AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
-  AuthenticatedDashboardAccountRoute: AuthenticatedDashboardAccountRoute,
-  AuthenticatedDashboardApiRoute: AuthenticatedDashboardApiRoute,
-  AuthenticatedDashboardBlueskyRoute: AuthenticatedDashboardBlueskyRoute,
-  AuthenticatedDashboardDomainsRoute: AuthenticatedDashboardDomainsRoute,
-  AuthenticatedDashboardProfileRoute: AuthenticatedDashboardProfileRoute,
-  AuthenticatedDashboardRoutesRoute: AuthenticatedDashboardRoutesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
