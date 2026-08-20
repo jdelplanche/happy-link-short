@@ -61,7 +61,7 @@ function AuthCallback() {
               De link is verlopen of al gebruikt. Probeer opnieuw in te loggen.
             </p>
             <button
-              onClick={() => nav({ to: "/auth", replace: true })}
+              onClick={() => nav("/auth", { replace: true })}
               className="mt-4 inline-flex items-center justify-center border border-border px-4 py-2 text-sm font-medium hover:bg-accent"
             >
               Terug naar inloggen

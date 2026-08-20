@@ -72,7 +72,7 @@ export default function ShortLink() {
         _device: device(),
         _country: null,
         _user_agent: navigator.userAgent.slice(0, 500),
-      });
+      } as never);
 
       window.location.replace(row.target_url);
     })();

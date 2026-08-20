@@ -44,7 +44,7 @@ function CleanProfile() {
         <h1 className="font-display text-2xl">{t("profile.ns.title", { handle })}</h1>
         <p className="max-w-sm text-sm text-muted-foreground">{t("profile.ns.body")}</p>
         <Link
-          to="/u/{$username}"
+          to="/u/$username"
           params={{ username: handle }}
           className="mt-2 text-sm font-medium underline"
         >

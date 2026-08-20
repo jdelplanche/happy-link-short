@@ -219,7 +219,7 @@ export default function Stats() {
         _is_active: (body.is_active as boolean | undefined) ?? null,
         _expires_at: (body.expires_at as string | null | undefined) ?? null,
         _slug: (body.slug as string | undefined) ?? null,
-      });
+      } as never);
       if (error) throw new Error(error.message);
       toast.success(successMsg);
       await load();
