@@ -1,14 +1,7 @@
 import { useRef, useState, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Copy, Check, RefreshCw, Loader2, ChevronDown, X, Eye } from "lucide-react";
+import { Copy, Check, RefreshCw, Loader2, ChevronDown, X } from "lucide-react";
 import { captionHref, captionSvg, prettyCaption, truncateCaption } from "@/lib/qr-caption";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
