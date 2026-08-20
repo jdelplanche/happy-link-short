@@ -345,9 +345,6 @@ export function QRPreview({
   const exportTokenRef = useRef<{ cancelled: boolean } | null>(null);
 
   const [contrastOpen, setContrastOpen] = useState(false);
-  // Mini export preview (data URL of the exact composed artefact).
-  const [exportPreview, setExportPreview] = useState<string | null>(null);
-  const [previewBusy, setPreviewBusy] = useState(false);
   /** Set when the user asked us to fix contrast first; fires after the props land. */
   const [pendingExport, setPendingExport] = useState(false);
   const { toast } = useToast();
