@@ -38,13 +38,16 @@ export const getReferralAnalytics = createServerFn({ method: "GET" })
     return fetchReferralAnalytics(context.userId, (profile?.username as string | null) ?? null);
   });
 
-/** Public: logs one visit on a referral link. */
+/**
+ * Public: bumps the inviter's referral counter for one visit.
+ * Privacy: no referer, IP, user agent or any other visitor metadata is stored.
+ */
 export const trackReferralVisit = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) =>
-    z.object({ handle: z.string().min(1).max(40), referer: z.string().max(500).optional() }).parse(data),
+    z.object({ handle: z.string().min(1).max(40) }).parse(data),
   )
   .handler(async ({ data }) => {
     const { recordReferralVisit } = await import("./monitoring.server");
-    await recordReferralVisit(data.handle, data.referer ?? null);
+    await recordReferralVisit(data.handle);
     return { ok: true };
   });

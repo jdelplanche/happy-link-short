@@ -92,8 +92,11 @@ export async function fetchReferralAnalytics(userId: string, handle: string | nu
   };
 }
 
-/** One visit on rout.be/r/<handle>. Best effort — never blocks the redirect. */
-export async function recordReferralVisit(handle: string, referer: string | null) {
+/**
+ * One visit on rout.be/r/<handle>. Best effort — never blocks the redirect.
+ * Stores only the inviter handle: no referer, IP, user agent or other metadata.
+ */
+export async function recordReferralVisit(handle: string) {
   const clean = handle.replace(/^@/, "").toLowerCase();
   if (!clean) return;
   try {
@@ -106,7 +109,6 @@ export async function recordReferralVisit(handle: string, referer: string | null
     await supabaseAdmin.from("referral_visits" as "profiles").insert({
       handle: clean,
       inviter_id: (inviter?.id as string | undefined) ?? null,
-      referer: referer?.slice(0, 500) ?? null,
     } as never);
   } catch (error) {
     console.error("referral visit log failed", error);

@@ -20,10 +20,8 @@ function ReferralLanding() {
 
   useEffect(() => {
     storeReferrer(handle);
-    // Analytics for the inviter's dashboard; never blocks the redirect.
-    void trackReferralVisit({
-      data: { handle, referer: typeof document !== "undefined" ? document.referrer : undefined },
-    }).catch(() => undefined);
+    // Counter for the inviter's dashboard; no visitor metadata, never blocks the redirect.
+    void trackReferralVisit({ data: { handle } }).catch(() => undefined);
     void navigate({ to: "/$username", params: { username: handle }, replace: true });
   }, [handle, navigate]);
 
