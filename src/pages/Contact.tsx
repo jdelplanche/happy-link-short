@@ -225,7 +225,7 @@ export default function Contact() {
 
           <a href={SOCIAL_LINKS.bluesky} {...EXTERNAL_LINK_PROPS} className={rowClass}>
             <span className="flex items-center gap-2 text-sm text-foreground">
-              <BlueskyIcon className="h-4 w-4" /> bsky.app/profile/routbe
+              <BlueskyIcon className="h-4 w-4" /> bsky.app/profile/rout.be
             </span>
             <span className="text-xs text-muted-foreground">Bluesky</span>
           </a>
