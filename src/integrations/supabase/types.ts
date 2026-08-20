@@ -119,13 +119,6 @@ export type Database = {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "analytics_events_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "public_profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       api_keys: {
@@ -315,13 +308,6 @@ export type Database = {
             columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "links_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "public_profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -818,87 +804,7 @@ export type Database = {
       }
     }
     Views: {
-      public_profiles: {
-        Row: {
-          avatar_url: string | null
-          bio: string | null
-          blocks: Json | null
-          bluesky_did: string | null
-          business_info: Json | null
-          card_style: string | null
-          created_at: string | null
-          custom_domain: string | null
-          display_name: string | null
-          favicon_url: string | null
-          forwarding_email: string | null
-          id: string | null
-          is_banned: boolean | null
-          is_early_believer: boolean | null
-          is_suspended: boolean | null
-          show_email_publicly: boolean | null
-          status: string | null
-          subdomain_enabled: boolean | null
-          tagline: string | null
-          theme: string | null
-          tier: string | null
-          username: string | null
-          verified: boolean | null
-          verified_at: string | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          bio?: string | null
-          blocks?: Json | null
-          bluesky_did?: string | null
-          business_info?: Json | null
-          card_style?: string | null
-          created_at?: string | null
-          custom_domain?: string | null
-          display_name?: string | null
-          favicon_url?: string | null
-          forwarding_email?: never
-          id?: string | null
-          is_banned?: boolean | null
-          is_early_believer?: boolean | null
-          is_suspended?: boolean | null
-          show_email_publicly?: boolean | null
-          status?: string | null
-          subdomain_enabled?: boolean | null
-          tagline?: string | null
-          theme?: string | null
-          tier?: string | null
-          username?: string | null
-          verified?: boolean | null
-          verified_at?: string | null
-        }
-        Update: {
-          avatar_url?: string | null
-          bio?: string | null
-          blocks?: Json | null
-          bluesky_did?: string | null
-          business_info?: Json | null
-          card_style?: string | null
-          created_at?: string | null
-          custom_domain?: string | null
-          display_name?: string | null
-          favicon_url?: string | null
-          forwarding_email?: never
-          id?: string | null
-          is_banned?: boolean | null
-          is_early_believer?: boolean | null
-          is_suspended?: boolean | null
-          show_email_publicly?: boolean | null
-          status?: string | null
-          subdomain_enabled?: boolean | null
-          tagline?: string | null
-          theme?: string | null
-          tier?: string | null
-          username?: string | null
-          verified?: boolean | null
-          verified_at?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       generate_unique_handle: { Args: { _seed: string }; Returns: string }
@@ -953,6 +859,35 @@ export type Database = {
           isOneToOne: true
           isSetofReturn: false
         }
+      }
+      get_public_profile: {
+        Args: { _username: string }
+        Returns: {
+          avatar_url: string
+          bio: string
+          blocks: Json
+          bluesky_did: string
+          business_info: Json
+          card_style: string
+          created_at: string
+          custom_domain: string
+          display_name: string
+          favicon_url: string
+          forwarding_email: string
+          id: string
+          is_banned: boolean
+          is_early_believer: boolean
+          is_suspended: boolean
+          show_email_publicly: boolean
+          status: string
+          subdomain_enabled: boolean
+          tagline: string
+          theme: string
+          tier: string
+          username: string
+          verified: boolean
+          verified_at: string
+        }[]
       }
       grant_signup_badges: { Args: { _user_id: string }; Returns: undefined }
       has_role: {
