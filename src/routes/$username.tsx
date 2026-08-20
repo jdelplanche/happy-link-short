@@ -1,19 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import Page from "@/pages/routes/username";
-import { socialImageMeta } from "@/lib/site";
 
 export const Route = createFileRoute("/$username")({
-  component: Page,
   head: () => ({
     meta: [
-      { title: "Profiel | ROUT" },
-      { name: "description", content: "Een publiek ROUT-profiel met links en contactgegevens." },
-      { property: "og:title", content: "Profiel | ROUT" },
-      { property: "og:description", content: "Een publiek ROUT-profiel met links en contactgegevens." },
+      { title: "ROUT" },
+      { name: "description", content: "ROUT — QR-codes en korte links met karakter." },
+      { property: "og:title", content: "ROUT" },
+      { property: "og:description", content: "ROUT — QR-codes en korte links met karakter." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      ...socialImageMeta,
     ],
   }),
+  component: Page,
 });

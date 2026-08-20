@@ -128,7 +128,7 @@ export async function listUsersPage(opts: {
     else if (term.includes("@")) {
       // E-mail search: resolve through the auth admin API first.
       const { data: list } = await supabaseAdmin.auth.admin.listUsers({ page: 1, perPage: 200 });
-      const ids = ((list?.users ?? []) as Array<{ id: string; email?: string | null }>)
+      const ids = ((list?.users ?? []) as Array<{ id: string; email?: string }>)
         .filter((u) => u.email?.toLowerCase().includes(term.toLowerCase()))
         .map((u) => u.id);
       if (ids.length === 0) return { rows: [], total: 0, page, perPage };

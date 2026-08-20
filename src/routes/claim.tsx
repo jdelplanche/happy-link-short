@@ -1,19 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import Page from "@/pages/Claim";
-import { socialImageMeta } from "@/lib/site";
 
 export const Route = createFileRoute("/claim")({
-  component: Page,
   head: () => ({
     meta: [
-      { title: "Claim je handle | ROUT" },
-      { name: "description", content: "Reserveer je persoonlijke ROUT-handle en profielpagina." },
-      { property: "og:title", content: "Claim je handle | ROUT" },
-      { property: "og:description", content: "Reserveer je persoonlijke ROUT-handle en profielpagina." },
+      { title: "Claim je korte link | ROUT" },
+      { name: "description", content: "Zet een anoniem gemaakte link of QR-code op je eigen ROUT-account." },
+      { property: "og:title", content: "Claim je korte link | ROUT" },
+      { property: "og:description", content: "Zet een anoniem gemaakte link of QR-code op je eigen ROUT-account." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      ...socialImageMeta,
     ],
   }),
+  component: Page,
 });

@@ -860,6 +860,35 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      get_public_profile: {
+        Args: { _username: string }
+        Returns: {
+          avatar_url: string
+          bio: string
+          blocks: Json
+          bluesky_did: string
+          business_info: Json
+          card_style: string
+          created_at: string
+          custom_domain: string
+          display_name: string
+          favicon_url: string
+          forwarding_email: string
+          id: string
+          is_banned: boolean
+          is_early_believer: boolean
+          is_suspended: boolean
+          show_email_publicly: boolean
+          status: string
+          subdomain_enabled: boolean
+          tagline: string
+          theme: string
+          tier: string
+          username: string
+          verified: boolean
+          verified_at: string
+        }[]
+      }
       grant_signup_badges: { Args: { _user_id: string }; Returns: undefined }
       has_role: {
         Args: {
@@ -868,6 +897,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_handle_available: { Args: { _username: string }; Returns: boolean }
       log_qr_scan: {
         Args: {
           _country?: string

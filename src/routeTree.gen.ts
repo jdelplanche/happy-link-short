@@ -18,8 +18,6 @@ import { Route as BatchRouteImport } from './routes/batch'
 import { Route as CardRouteImport } from './routes/card'
 import { Route as ClaimRouteImport } from './routes/claim'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as DevEmailPreviewRouteImport } from './routes/dev-email-preview'
-import { Route as DocsRouteImport } from './routes/docs'
 import { Route as EnRouteImport } from './routes/en'
 import { Route as GoRouteImport } from './routes/go'
 import { Route as HubRouteImport } from './routes/hub'
@@ -39,13 +37,11 @@ import { Route as RUsernameRouteImport } from './routes/r.$username'
 import { Route as SSlugRouteImport } from './routes/s.$slug'
 import { Route as StatsTokenRouteImport } from './routes/stats.$token'
 import { Route as UUsernameRouteImport } from './routes/u.$username'
-import { Route as AuthenticatedAdminWebhooksRouteImport } from './routes/_authenticated/admin_.webhooks'
-import { Route as AuthenticatedDashboardAccountRouteImport } from './routes/_authenticated/dashboard_.account'
-import { Route as AuthenticatedDashboardApiRouteImport } from './routes/_authenticated/dashboard_.api'
-import { Route as AuthenticatedDashboardBlueskyRouteImport } from './routes/_authenticated/dashboard_.bluesky'
-import { Route as AuthenticatedDashboardDomainsRouteImport } from './routes/_authenticated/dashboard_.domains'
-import { Route as AuthenticatedDashboardProfileRouteImport } from './routes/_authenticated/dashboard_.profile'
-import { Route as AuthenticatedDashboardRoutesRouteImport } from './routes/_authenticated/dashboard_.routes'
+import { Route as AuthenticatedAdminWebhooksRouteImport } from './routes/_authenticated/admin.webhooks'
+import { Route as AuthenticatedDashboardBlueskyRouteImport } from './routes/_authenticated/dashboard.bluesky'
+import { Route as AuthenticatedDashboardDomainsRouteImport } from './routes/_authenticated/dashboard.domains'
+import { Route as AuthenticatedDashboardProfileRouteImport } from './routes/_authenticated/dashboard.profile'
+import { Route as AuthenticatedDashboardRoutesRouteImport } from './routes/_authenticated/dashboard.routes'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -89,16 +85,6 @@ const ClaimRoute = ClaimRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DevEmailPreviewRoute = DevEmailPreviewRouteImport.update({
-  id: '/dev-email-preview',
-  path: '/dev-email-preview',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DocsRoute = DocsRouteImport.update({
-  id: '/docs',
-  path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnRoute = EnRouteImport.update({
@@ -198,45 +184,33 @@ const UUsernameRoute = UUsernameRouteImport.update({
 } as any)
 const AuthenticatedAdminWebhooksRoute =
   AuthenticatedAdminWebhooksRouteImport.update({
-    id: '/admin_/webhooks',
-    path: '/admin/webhooks',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedDashboardAccountRoute =
-  AuthenticatedDashboardAccountRouteImport.update({
-    id: '/dashboard_/account',
-    path: '/dashboard/account',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedDashboardApiRoute =
-  AuthenticatedDashboardApiRouteImport.update({
-    id: '/dashboard_/api',
-    path: '/dashboard/api',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/webhooks',
+    path: '/webhooks',
+    getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedDashboardBlueskyRoute =
   AuthenticatedDashboardBlueskyRouteImport.update({
-    id: '/dashboard_/bluesky',
-    path: '/dashboard/bluesky',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/bluesky',
+    path: '/bluesky',
+    getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardDomainsRoute =
   AuthenticatedDashboardDomainsRouteImport.update({
-    id: '/dashboard_/domains',
-    path: '/dashboard/domains',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/domains',
+    path: '/domains',
+    getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardProfileRoute =
   AuthenticatedDashboardProfileRouteImport.update({
-    id: '/dashboard_/profile',
-    path: '/dashboard/profile',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardRoutesRoute =
   AuthenticatedDashboardRoutesRouteImport.update({
-    id: '/dashboard_/routes',
-    path: '/dashboard/routes',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/routes',
+    path: '/routes',
+    getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -248,8 +222,6 @@ export interface FileRoutesByFullPath {
   '/card': typeof CardRoute
   '/claim': typeof ClaimRoute
   '/contact': typeof ContactRoute
-  '/dev-email-preview': typeof DevEmailPreviewRoute
-  '/docs': typeof DocsRoute
   '/en': typeof EnRoute
   '/go': typeof GoRoute
   '/hub': typeof HubRoute
@@ -260,8 +232,8 @@ export interface FileRoutesByFullPath {
   '/sovereignty': typeof SovereigntyRoute
   '/studio': typeof StudioRoute
   '/terms': typeof TermsRoute
-  '/admin': typeof AuthenticatedAdminRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/domains': typeof AuthenticatedDomainsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -270,8 +242,6 @@ export interface FileRoutesByFullPath {
   '/stats/$token': typeof StatsTokenRoute
   '/u/$username': typeof UUsernameRoute
   '/admin/webhooks': typeof AuthenticatedAdminWebhooksRoute
-  '/dashboard/account': typeof AuthenticatedDashboardAccountRoute
-  '/dashboard/api': typeof AuthenticatedDashboardApiRoute
   '/dashboard/bluesky': typeof AuthenticatedDashboardBlueskyRoute
   '/dashboard/domains': typeof AuthenticatedDashboardDomainsRoute
   '/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
@@ -286,8 +256,6 @@ export interface FileRoutesByTo {
   '/card': typeof CardRoute
   '/claim': typeof ClaimRoute
   '/contact': typeof ContactRoute
-  '/dev-email-preview': typeof DevEmailPreviewRoute
-  '/docs': typeof DocsRoute
   '/en': typeof EnRoute
   '/go': typeof GoRoute
   '/hub': typeof HubRoute
@@ -298,8 +266,8 @@ export interface FileRoutesByTo {
   '/sovereignty': typeof SovereigntyRoute
   '/studio': typeof StudioRoute
   '/terms': typeof TermsRoute
-  '/admin': typeof AuthenticatedAdminRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/domains': typeof AuthenticatedDomainsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -308,8 +276,6 @@ export interface FileRoutesByTo {
   '/stats/$token': typeof StatsTokenRoute
   '/u/$username': typeof UUsernameRoute
   '/admin/webhooks': typeof AuthenticatedAdminWebhooksRoute
-  '/dashboard/account': typeof AuthenticatedDashboardAccountRoute
-  '/dashboard/api': typeof AuthenticatedDashboardApiRoute
   '/dashboard/bluesky': typeof AuthenticatedDashboardBlueskyRoute
   '/dashboard/domains': typeof AuthenticatedDashboardDomainsRoute
   '/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
@@ -326,8 +292,6 @@ export interface FileRoutesById {
   '/card': typeof CardRoute
   '/claim': typeof ClaimRoute
   '/contact': typeof ContactRoute
-  '/dev-email-preview': typeof DevEmailPreviewRoute
-  '/docs': typeof DocsRoute
   '/en': typeof EnRoute
   '/go': typeof GoRoute
   '/hub': typeof HubRoute
@@ -338,8 +302,8 @@ export interface FileRoutesById {
   '/sovereignty': typeof SovereigntyRoute
   '/studio': typeof StudioRoute
   '/terms': typeof TermsRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/_authenticated/domains': typeof AuthenticatedDomainsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/auth_/callback': typeof AuthCallbackRoute
@@ -347,13 +311,11 @@ export interface FileRoutesById {
   '/s/$slug': typeof SSlugRoute
   '/stats/$token': typeof StatsTokenRoute
   '/u/$username': typeof UUsernameRoute
-  '/_authenticated/admin_/webhooks': typeof AuthenticatedAdminWebhooksRoute
-  '/_authenticated/dashboard_/account': typeof AuthenticatedDashboardAccountRoute
-  '/_authenticated/dashboard_/api': typeof AuthenticatedDashboardApiRoute
-  '/_authenticated/dashboard_/bluesky': typeof AuthenticatedDashboardBlueskyRoute
-  '/_authenticated/dashboard_/domains': typeof AuthenticatedDashboardDomainsRoute
-  '/_authenticated/dashboard_/profile': typeof AuthenticatedDashboardProfileRoute
-  '/_authenticated/dashboard_/routes': typeof AuthenticatedDashboardRoutesRoute
+  '/_authenticated/admin/webhooks': typeof AuthenticatedAdminWebhooksRoute
+  '/_authenticated/dashboard/bluesky': typeof AuthenticatedDashboardBlueskyRoute
+  '/_authenticated/dashboard/domains': typeof AuthenticatedDashboardDomainsRoute
+  '/_authenticated/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
+  '/_authenticated/dashboard/routes': typeof AuthenticatedDashboardRoutesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -366,8 +328,6 @@ export interface FileRouteTypes {
     | '/card'
     | '/claim'
     | '/contact'
-    | '/dev-email-preview'
-    | '/docs'
     | '/en'
     | '/go'
     | '/hub'
@@ -388,8 +348,6 @@ export interface FileRouteTypes {
     | '/stats/$token'
     | '/u/$username'
     | '/admin/webhooks'
-    | '/dashboard/account'
-    | '/dashboard/api'
     | '/dashboard/bluesky'
     | '/dashboard/domains'
     | '/dashboard/profile'
@@ -404,8 +362,6 @@ export interface FileRouteTypes {
     | '/card'
     | '/claim'
     | '/contact'
-    | '/dev-email-preview'
-    | '/docs'
     | '/en'
     | '/go'
     | '/hub'
@@ -426,8 +382,6 @@ export interface FileRouteTypes {
     | '/stats/$token'
     | '/u/$username'
     | '/admin/webhooks'
-    | '/dashboard/account'
-    | '/dashboard/api'
     | '/dashboard/bluesky'
     | '/dashboard/domains'
     | '/dashboard/profile'
@@ -443,8 +397,6 @@ export interface FileRouteTypes {
     | '/card'
     | '/claim'
     | '/contact'
-    | '/dev-email-preview'
-    | '/docs'
     | '/en'
     | '/go'
     | '/hub'
@@ -464,13 +416,11 @@ export interface FileRouteTypes {
     | '/s/$slug'
     | '/stats/$token'
     | '/u/$username'
-    | '/_authenticated/admin_/webhooks'
-    | '/_authenticated/dashboard_/account'
-    | '/_authenticated/dashboard_/api'
-    | '/_authenticated/dashboard_/bluesky'
-    | '/_authenticated/dashboard_/domains'
-    | '/_authenticated/dashboard_/profile'
-    | '/_authenticated/dashboard_/routes'
+    | '/_authenticated/admin/webhooks'
+    | '/_authenticated/dashboard/bluesky'
+    | '/_authenticated/dashboard/domains'
+    | '/_authenticated/dashboard/profile'
+    | '/_authenticated/dashboard/routes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -483,8 +433,6 @@ export interface RootRouteChildren {
   CardRoute: typeof CardRoute
   ClaimRoute: typeof ClaimRoute
   ContactRoute: typeof ContactRoute
-  DevEmailPreviewRoute: typeof DevEmailPreviewRoute
-  DocsRoute: typeof DocsRoute
   EnRoute: typeof EnRoute
   GoRoute: typeof GoRoute
   HubRoute: typeof HubRoute
@@ -565,20 +513,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dev-email-preview': {
-      id: '/dev-email-preview'
-      path: '/dev-email-preview'
-      fullPath: '/dev-email-preview'
-      preLoaderRoute: typeof DevEmailPreviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs': {
-      id: '/docs'
-      path: '/docs'
-      fullPath: '/docs'
-      preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/en': {
@@ -714,84 +648,87 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UUsernameRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin_/webhooks': {
-      id: '/_authenticated/admin_/webhooks'
-      path: '/admin/webhooks'
+    '/_authenticated/admin/webhooks': {
+      id: '/_authenticated/admin/webhooks'
+      path: '/webhooks'
       fullPath: '/admin/webhooks'
       preLoaderRoute: typeof AuthenticatedAdminWebhooksRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/_authenticated/dashboard_/account': {
-      id: '/_authenticated/dashboard_/account'
-      path: '/dashboard/account'
-      fullPath: '/dashboard/account'
-      preLoaderRoute: typeof AuthenticatedDashboardAccountRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/dashboard_/api': {
-      id: '/_authenticated/dashboard_/api'
-      path: '/dashboard/api'
-      fullPath: '/dashboard/api'
-      preLoaderRoute: typeof AuthenticatedDashboardApiRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/dashboard_/bluesky': {
-      id: '/_authenticated/dashboard_/bluesky'
-      path: '/dashboard/bluesky'
+    '/_authenticated/dashboard/bluesky': {
+      id: '/_authenticated/dashboard/bluesky'
+      path: '/bluesky'
       fullPath: '/dashboard/bluesky'
       preLoaderRoute: typeof AuthenticatedDashboardBlueskyRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/dashboard_/domains': {
-      id: '/_authenticated/dashboard_/domains'
-      path: '/dashboard/domains'
+    '/_authenticated/dashboard/domains': {
+      id: '/_authenticated/dashboard/domains'
+      path: '/domains'
       fullPath: '/dashboard/domains'
       preLoaderRoute: typeof AuthenticatedDashboardDomainsRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/dashboard_/profile': {
-      id: '/_authenticated/dashboard_/profile'
-      path: '/dashboard/profile'
+    '/_authenticated/dashboard/profile': {
+      id: '/_authenticated/dashboard/profile'
+      path: '/profile'
       fullPath: '/dashboard/profile'
       preLoaderRoute: typeof AuthenticatedDashboardProfileRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/dashboard_/routes': {
-      id: '/_authenticated/dashboard_/routes'
-      path: '/dashboard/routes'
+    '/_authenticated/dashboard/routes': {
+      id: '/_authenticated/dashboard/routes'
+      path: '/routes'
       fullPath: '/dashboard/routes'
       preLoaderRoute: typeof AuthenticatedDashboardRoutesRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedDashboardRoute
     }
   }
 }
 
-interface AuthenticatedRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedDomainsRoute: typeof AuthenticatedDomainsRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminWebhooksRoute: typeof AuthenticatedAdminWebhooksRoute
-  AuthenticatedDashboardAccountRoute: typeof AuthenticatedDashboardAccountRoute
-  AuthenticatedDashboardApiRoute: typeof AuthenticatedDashboardApiRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
+interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardBlueskyRoute: typeof AuthenticatedDashboardBlueskyRoute
   AuthenticatedDashboardDomainsRoute: typeof AuthenticatedDashboardDomainsRoute
   AuthenticatedDashboardProfileRoute: typeof AuthenticatedDashboardProfileRoute
   AuthenticatedDashboardRoutesRoute: typeof AuthenticatedDashboardRoutesRoute
 }
 
+const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
+  {
+    AuthenticatedDashboardBlueskyRoute: AuthenticatedDashboardBlueskyRoute,
+    AuthenticatedDashboardDomainsRoute: AuthenticatedDashboardDomainsRoute,
+    AuthenticatedDashboardProfileRoute: AuthenticatedDashboardProfileRoute,
+    AuthenticatedDashboardRoutesRoute: AuthenticatedDashboardRoutesRoute,
+  }
+
+const AuthenticatedDashboardRouteWithChildren =
+  AuthenticatedDashboardRoute._addFileChildren(
+    AuthenticatedDashboardRouteChildren,
+  )
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
+  AuthenticatedDomainsRoute: typeof AuthenticatedDomainsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+}
+
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
   AuthenticatedDomainsRoute: AuthenticatedDomainsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
-  AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
-  AuthenticatedDashboardAccountRoute: AuthenticatedDashboardAccountRoute,
-  AuthenticatedDashboardApiRoute: AuthenticatedDashboardApiRoute,
-  AuthenticatedDashboardBlueskyRoute: AuthenticatedDashboardBlueskyRoute,
-  AuthenticatedDashboardDomainsRoute: AuthenticatedDashboardDomainsRoute,
-  AuthenticatedDashboardProfileRoute: AuthenticatedDashboardProfileRoute,
-  AuthenticatedDashboardRoutesRoute: AuthenticatedDashboardRoutesRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -808,8 +745,6 @@ const rootRouteChildren: RootRouteChildren = {
   CardRoute: CardRoute,
   ClaimRoute: ClaimRoute,
   ContactRoute: ContactRoute,
-  DevEmailPreviewRoute: DevEmailPreviewRoute,
-  DocsRoute: DocsRoute,
   EnRoute: EnRoute,
   GoRoute: GoRoute,
   HubRoute: HubRoute,

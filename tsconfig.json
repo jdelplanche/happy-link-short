@@ -13,13 +13,14 @@
     "noEmit": true,
 
     "skipLibCheck": true,
+    // The imported ROUT codebase was authored against looser settings; strict
+    // null checks stay on because TanStack Router's types rely on them.
     "strict": false,
     "strictNullChecks": true,
-    "noImplicitAny": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitOverride": false,
     "noImplicitReturns": false,
     "noPropertyAccessFromIndexSignature": false,
     "noUncheckedIndexedAccess": false,

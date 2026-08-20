@@ -12,15 +12,14 @@ export function useProfileRecord(username: string) {
     let cancelled = false;
     (async () => {
       setLoading(true);
-      const { data } = await supabase
-        .from("profiles")
-        .select(
-          "id, username, display_name, tagline, avatar_url, theme, card_style, blocks, tier, verified, status, is_suspended, is_early_believer, show_email_publicly, favicon_url, bio, created_at",
-        )
-        .eq("username", username.toLowerCase())
-        .maybeSingle();
+      // The profiles table is not publicly readable; this security-definer
+      // function returns only the columns meant for a public profile page.
+      const { data } = await supabase.rpc("get_public_profile" as never, {
+        _username: username.toLowerCase(),
+      } as never);
       if (cancelled) return;
-      const row = data as (Record<string, unknown> & { blocks?: unknown }) | null;
+      const rows = (data ?? []) as unknown as Array<Record<string, unknown> & { blocks?: unknown }>;
+      const row = rows[0] ?? null;
       setSuspended(Boolean(row?.["is_suspended"]));
       setProfile(
         row

@@ -307,13 +307,12 @@ export function ProfileEditor() {
     }
     setAvailability("checking");
     const id = setTimeout(async () => {
-      const { data } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("username", normalized)
-        .maybeSingle();
-      if (data && data.id !== user?.id) setAvailability("taken");
-      else setAvailability("available");
+      // Availability is checked through a helper so members never read other
+      // people's profile rows.
+      const { data } = await supabase.rpc("is_handle_available" as never, {
+        _username: normalized,
+      } as never);
+      setAvailability(data === false ? "taken" : "available");
     }, 400);
     return () => clearTimeout(id);
   }, [normalized, handleOk, claimed, user]);

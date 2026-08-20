@@ -1,22 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import Page from "@/pages/routes/hub";
-import { socialImageMeta } from "@/lib/site";
-
-const str = (v: unknown) => (typeof v === "string" ? v : undefined);
 
 export const Route = createFileRoute("/hub")({
-  component: Page,
-  validateSearch: (s: Record<string, unknown>) => ({ ...(s as Record<string, string | undefined>) }),
+  validateSearch: (search: Record<string, unknown>) =>
+    Object.fromEntries(
+      Object.entries(search).filter(([, v]) => typeof v === "string"),
+    ) as Record<string, string | undefined>,
   head: () => ({
     meta: [
-      { title: "Linkhub | ROUT" },
-      { name: "description", content: "Alle links van dit ROUT-profiel op één plek." },
-      { property: "og:title", content: "Linkhub | ROUT" },
-      { property: "og:description", content: "Alle links van dit ROUT-profiel op één plek." },
+      { title: "Link hub | ROUT" },
+      { name: "description", content: "Alle sociale links van dit profiel op één kleine, snelle pagina." },
+      { property: "og:title", content: "Link hub | ROUT" },
+      { property: "og:description", content: "Alle sociale links van dit profiel op één kleine, snelle pagina." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      ...socialImageMeta,
     ],
   }),
+  component: Page,
 });

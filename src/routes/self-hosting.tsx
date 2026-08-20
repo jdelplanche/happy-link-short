@@ -1,19 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import Page from "@/pages/routes/self-hosting";
-import { socialImageMeta } from "@/lib/site";
 
 export const Route = createFileRoute("/self-hosting")({
-  component: Page,
   head: () => ({
     meta: [
       { title: "Self-hosting ROUT" },
-      { name: "description", content: "Draai ROUT op je eigen infrastructuur — documentatie en vereisten." },
+      { name: "description", content: "Draai ROUT op je eigen infrastructuur: installatie, configuratie en updates." },
       { property: "og:title", content: "Self-hosting ROUT" },
-      { property: "og:description", content: "Draai ROUT op je eigen infrastructuur — documentatie en vereisten." },
+      { property: "og:description", content: "Draai ROUT op je eigen infrastructuur: installatie, configuratie en updates." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      ...socialImageMeta,
     ],
   }),
+  component: Page,
 });

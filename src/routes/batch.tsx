@@ -1,19 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import Page from "@/pages/Batch";
-import { socialImageMeta } from "@/lib/site";
 
 export const Route = createFileRoute("/batch")({
-  component: Page,
   head: () => ({
     meta: [
-      { title: "Batch QR-codes genereren | ROUT" },
-      { name: "description", content: "Genereer honderden QR-codes in één keer vanuit een CSV-bestand." },
-      { property: "og:title", content: "Batch QR-codes genereren | ROUT" },
-      { property: "og:description", content: "Genereer honderden QR-codes in één keer vanuit een CSV-bestand." },
+      { title: "Batch QR-generator | ROUT" },
+      { name: "description", content: "Genereer honderden QR-codes in één keer vanuit een CSV en download ze als ZIP." },
+      { property: "og:title", content: "Batch QR-generator | ROUT" },
+      { property: "og:description", content: "Genereer honderden QR-codes in één keer vanuit een CSV en download ze als ZIP." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      ...socialImageMeta,
     ],
   }),
+  component: Page,
 });

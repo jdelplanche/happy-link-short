@@ -1,22 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import Page from "@/pages/routes/go";
-import { socialImageMeta } from "@/lib/site";
-
-const str = (v: unknown) => (typeof v === "string" ? v : undefined);
 
 export const Route = createFileRoute("/go")({
-  component: Page,
-  validateSearch: (s: Record<string, unknown>) => ({ i: str(s.i), a: str(s.a), w: str(s.w) }),
+  validateSearch: (search: Record<string, unknown>) =>
+    Object.fromEntries(
+      Object.entries(search).filter(([, v]) => typeof v === "string"),
+    ) as Record<string, string | undefined>,
   head: () => ({
     meta: [
       { title: "Doorverwijzen… | ROUT" },
-      { name: "description", content: "Je wordt doorgestuurd naar de juiste app-winkel of website." },
+      { name: "description", content: "Slimme doorverwijzing naar de juiste app of website voor jouw toestel." },
       { property: "og:title", content: "Doorverwijzen… | ROUT" },
-      { property: "og:description", content: "Je wordt doorgestuurd naar de juiste app-winkel of website." },
+      { property: "og:description", content: "Slimme doorverwijzing naar de juiste app of website voor jouw toestel." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      ...socialImageMeta,
     ],
   }),
+  component: Page,
 });

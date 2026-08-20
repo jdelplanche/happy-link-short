@@ -110,7 +110,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               (p) => path === p || path.startsWith(`${p}/`),
             );
             if (isProtected) {
-              void router.navigate({ to: "/auth", search: {} as never, replace: true });
+              void router.navigate({ to: "/auth", search: {}, replace: true } as never);
             }
             return;
           }

@@ -1,11 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import Page from "@/pages/Domains";
-import { noindexMeta } from "@/lib/site";
 
 export const Route = createFileRoute("/_authenticated/domains")({
-  component: Page,
   head: () => ({
-    meta: [{ title: "Domeinen | ROUT" }, noindexMeta],
+    meta: [
+      { title: "Domeinen | ROUT" },
+      { name: "description", content: "Beheer je ROUT-account, links en QR-codes." },
+      { name: "robots", content: "noindex, nofollow" },
+      { property: "og:title", content: "Domeinen | ROUT" },
+      { property: "og:description", content: "Beheer je ROUT-account, links en QR-codes." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
   }),
+  component: Page,
 });

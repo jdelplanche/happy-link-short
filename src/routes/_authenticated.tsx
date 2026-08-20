@@ -1,17 +1,20 @@
-import { Outlet, createFileRoute, useLocation, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-
 import { RoutePendingSkeleton } from "@/components/RouteFallbacks";
 import { supabase } from "@/integrations/supabase/client";
 
+export const Route = createFileRoute("/_authenticated")({
+  component: AuthenticatedLayout,
+});
+
 /**
- * Session gate for every signed-in surface. The session lives in the browser,
- * so the check happens client-side; the blocked URL is preserved so the member
- * lands back where they intended after signing in.
+ * Session gate for every signed-in surface. The Supabase session lives in
+ * localStorage, so the check has to run client-side; the blocked URL is kept so
+ * the user lands back where they intended after signing in.
  */
 function AuthenticatedLayout() {
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useRouterState({ select: (s) => s.location });
   const [state, setState] = useState<"checking" | "in" | "out">("checking");
 
   useEffect(() => {
@@ -27,19 +30,10 @@ function AuthenticatedLayout() {
 
   useEffect(() => {
     if (state !== "out") return;
-    const target = `${location.pathname}${location.searchStr ?? ""}`;
-    navigate({
-      to: "/auth",
-      search: { redirect: target } as never,
-      replace: true,
-    });
-  }, [state, location.pathname, location.searchStr, navigate]);
+    const redirect = `${location.pathname}${location.searchStr ?? ""}`;
+    navigate({ to: "/auth", search: { redirect }, replace: true } as never);
+  }, [state, navigate, location.pathname, location.searchStr]);
 
   if (state !== "in") return <RoutePendingSkeleton />;
-
   return <Outlet />;
 }
-
-export const Route = createFileRoute("/_authenticated")({
-  component: AuthenticatedLayout,
-});

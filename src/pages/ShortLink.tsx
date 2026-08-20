@@ -70,9 +70,9 @@ export default function ShortLink() {
       void supabase.rpc("log_qr_scan", {
         _tracked_qr_id: row.id,
         _device: device(),
-        _country: undefined,
+        _country: null,
         _user_agent: navigator.userAgent.slice(0, 500),
-      });
+      } as never);
 
       window.location.replace(row.target_url);
     })();

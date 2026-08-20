@@ -18,7 +18,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { useAppRecovery } from "@/hooks/useAppRecovery";
 
 function NotFoundComponent() {
   return (
@@ -85,10 +84,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ROUT — QR codes en korte links" },
+      { title: "ROUT — QR-codes en korte links met karakter" },
       {
         name: "description",
-        content: "Europese QR-codes, korte links en profielpagina's van ROUT.",
+        content:
+          "Ontwerp stijlvolle QR-codes en trackbare korte links. Privacyvriendelijk en in eigen beheer.",
+      },
+      { name: "author", content: "ROUT" },
+      { property: "og:title", content: "ROUT — QR-codes en korte links met karakter" },
+      {
+        property: "og:description",
+        content:
+          "Ontwerp stijlvolle QR-codes en trackbare korte links. Privacyvriendelijk en in eigen beheer.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -99,7 +106,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -124,7 +130,6 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const generation = useAppRecovery();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -134,11 +139,9 @@ function RootComponent() {
             <Toaster />
             <Sonner />
             <AuthProvider>
-              <ErrorBoundary resetKey={generation}>
-                <div key={generation} className="contents">
-                  {/* Required: nested routes render here. */}
-                  <Outlet />
-                </div>
+              <ErrorBoundary>
+                {/* Required: nested routes render here. */}
+                <Outlet />
               </ErrorBoundary>
             </AuthProvider>
           </TooltipProvider>
