@@ -1,0 +1,67 @@
+name: Security scan
+
+# Runs on every push, pull request and deploy-triggering merge so
+# vulnerabilities surface before the app goes live on rout.be.
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Audit dependencies (fails on high/critical)
+        run: bun audit --audit-level=high
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  codeql:
+    name: CodeQL (JS/TS)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+      - uses: github/codeql-action/analyze@v3
+
+  service-key-guard:
+    name: No service keys in client code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail when a service-role key is reachable from the browser bundle
+        run: |
+          if grep -rnE "SERVICE_ROLE|sb_secret_|service_role" src --include="*.ts" --include="*.tsx" \
+               | grep -vE "\.server\.(ts|tsx):" | grep -vE "^src/integrations/supabase/"; then
+            echo "::error::Service-role reference found outside a *.server.ts module"
+            exit 1
+          fi
+          echo "OK: no service-role references in client-reachable code"
