@@ -10,7 +10,7 @@ import { useProfileRecord } from "@/hooks/useProfileRecord";
 
 
 function PublicProfile() {
-  const { username } = useParams({ from: "/@{$username}" });
+  const { username } = useParams({ strict: false }) as { username: string };
   const { profile, suspended, loading } = useProfileRecord(username);
 
   useEffect(() => {

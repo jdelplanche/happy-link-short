@@ -9,7 +9,7 @@ import { useProfileRecord } from "@/hooks/useProfileRecord";
 
 
 function FreeProfile() {
-  const { username } = useParams({ from: "/u/@{$username}" });
+  const { username } = useParams({ strict: false }) as { username: string };
   // Normalise: strip a leading @ so /u/@john and /u/john resolve identically.
   const handle = username.replace(/^@/, "").toLowerCase();
   const { profile, suspended, loading } = useProfileRecord(handle);
